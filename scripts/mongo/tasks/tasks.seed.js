@@ -1,0 +1,17 @@
+db.tasks.insert([
+  { id: '12345671', name: 'Juan Eduardo' },
+  { id: '12345672', name: 'Daniel Martinez' },
+  { id: '12345673', name: 'Maria Fernandez' },
+  { id: '12345674', name: 'Alberto Diaz' },
+  { id: '12345675', name: 'Jose Martinez' },
+  { id: '12345676', name: 'Jhessica Fernandez' },
+  { id: '12345677', name: 'Juan Eduardo' },
+  { id: '12345678', name: 'Daniel Martinez' },
+  { id: '12345679', name: 'Maria Fernandez' },
+  { id: '12345610', name: 'Alberto Diaz' },
+  { id: '12345611', name: 'Jose Martinez' },
+  { id: '12345612', name: 'Jhessica Fernandez' },
+  { id: '12345613', name: 'Juan Eduardo' },
+  { id: '12345614', name: 'Daniel Martinez' },
+  { id: '12345615', name: 'Maria Martinez' },
+]);

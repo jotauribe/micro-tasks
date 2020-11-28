@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  website:
+    tty: true
+    build: ./web
+    container_name: microstasks-website
+    ports:
+      - '3000:3000'
+    volumes:
+      - './web/:/usr/src/web'
+      - /usr/src/web/node_modules/
+    depends_on:
+      - users
+      - tasks
+      - users-database
+      - tasks-database
+  users:
+    build: ./services/users
+    container_name: microstasks-users-service
+    ports:
+      - '3020:3020'
+    volumes:
+      - './services/users/:/usr/src/users'
+      - /usr/src/users/node_modules/
+    depends_on:
+      - users-database
+  tasks:
+    build: ./services/tasks
+    container_name: microstasks-tasks-service
+    ports:
+      - '3030:3030'
+    volumes:
+      - './services/tasks/:/usr/src/tasks'
+      - /usr/src/tasks/node_modules/
+    depends_on:
+      - tasks-database
+  users-database:
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27018'
+    environment:
+      - MONGO_INITDB_DATABASE=users-database
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./scripts/mongo/users/:/docker-entrypoint-initdb.d/
+  tasks-database:
+    image: mongo
+    command: mongod --port 27018
+    restart: always
+    ports:
+      - '27018:27019'
+    environment:
+      - MONGO_INITDB_DATABASE=tasks-database
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./scripts/mongo/tasks/:/docker-entrypoint-initdb.d/
