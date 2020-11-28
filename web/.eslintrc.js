@@ -19,7 +19,8 @@ module.exports = {
         'no-unused-vars': 'off',
         'react/jsx-boolean-value': ['error', 'never'],
         '@typescript-eslint/no-unused-vars': ['error'],
-        '@typescript-eslint/no-explicit-any': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-use-before-define': 'off'
     },
     overrides: [
         {
