@@ -1,0 +1,17 @@
+.typography {
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.4;
+
+    &__bold {
+        font-weight: 700;
+    }
+
+    &__small {
+        font-size: 13px;
+    }
+
+    &__large {
+        font-size: 18px;
+    }
+}
