@@ -5,10 +5,10 @@ import { BsFillPlusCircleFill } from 'react-icons/bs'
 import Text from '@components/Typography'
 import Container from '@components/Container'
 import SearchBox from '@components/SearchBox'
-import Input from '@components/Input'
 import Button from '@components/Button'
-import IconButton from '@components/IconButton'
-import User from 'src/components/User'
+import User from '@components/User'
+import usersService from '@services/users.service'
+import useAsyncService from '@hooks/useAsyncService'
 
 const Header = styled(Container.as('header'))`
     min-width: 300px;
@@ -26,31 +26,9 @@ const UserListContainer = styled(Container)`
     box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
 `
 
-const ContainerWithHover = styled(Container)`
-    :hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-`
+const Users = ({}) => {
+    const [_, users] = useAsyncService(usersService.getAll, { runOnMount: true })
 
-const Users = ({
-    users = [
-        { name: 'Juan Eduardo', id: '12345678' },
-        { name: 'Daniel Martinez', id: '12345678' },
-        { name: 'Maria Fernandez', id: '12345678' },
-        { name: 'Alberto Diaz', id: '12345678' },
-        { name: 'Jose Martinez', id: '12345678' },
-        { name: 'Jhessica Fernandez', id: '12345678' },
-        { name: 'Juan Eduardo', id: '12345678' },
-        { name: 'Daniel Martinez', id: '12345678' },
-        { name: 'Maria Fernandez', id: '12345678' },
-        { name: 'Alberto Diaz', id: '12345678' },
-        { name: 'Jose Martinez', id: '12345678' },
-        { name: 'Jhessica Fernandez', id: '12345678' },
-        { name: 'Juan Eduardo', id: '12345678' },
-        { name: 'Daniel Martinez', id: '12345678' },
-        { name: 'Maria Martinez', id: '12345678' }
-    ]
-}) => {
     return (
         <UserListContainer vertical padded childrenSpacedBy="12px">
             <Header centered>
@@ -61,7 +39,7 @@ const Users = ({
                 <PlusIcon size="2.5em" color="rgb(128, 138, 153)" />
                 <Text as="span">Add New User</Text>
             </Button>
-            {users.map(user => (
+            {users.data?.map(user => (
                 <User user={user} onEdit={console.log} />
             ))}
         </UserListContainer>
