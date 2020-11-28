@@ -18,6 +18,9 @@ services:
   users:
     build: ./services/users
     container_name: microstasks-users-service
+    environment:
+      - MONGO_USER=user
+      - MONGO_PWD=password
     ports:
       - '3020:3020'
     volumes:
@@ -37,9 +40,10 @@ services:
       - tasks-database
   users-database:
     image: mongo
+    command: mongod
     restart: always
     ports:
-      - '27017:27018'
+      - '27017:27017'
     environment:
       - MONGO_INITDB_DATABASE=users-database
       - MONGO_INITDB_ROOT_USERNAME=user
@@ -48,10 +52,10 @@ services:
       - ./scripts/mongo/users/:/docker-entrypoint-initdb.d/
   tasks-database:
     image: mongo
-    command: mongod --port 27018
+    command: mongod --port 27019
     restart: always
     ports:
-      - '27018:27019'
+      - '27019:27019'
     environment:
       - MONGO_INITDB_DATABASE=tasks-database
       - MONGO_INITDB_ROOT_USERNAME=user

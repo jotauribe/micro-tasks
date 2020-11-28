@@ -1,5 +1,5 @@
 db.createUser({
   user: 'user',
   pwd: 'password',
-  roles: [{ role: 'readWrite', db: 'users' }],
+  roles: [{ role: 'readWrite', db: 'users-database' }],
 });
