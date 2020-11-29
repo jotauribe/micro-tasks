@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { negate as not, isEqual, filter } from 'lodash/fp'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 
 import Text from '@components/Typography'
@@ -28,6 +29,14 @@ const UserListContainer = styled(Container)`
 
 const Users = ({}) => {
     const [_, users] = useAsyncService(usersService.getAll, { runOnMount: true })
+    const [_updateUser] = useAsyncService(usersService.update)
+    const [_deleteUser] = useAsyncService(usersService.remove)
+
+    const updateUser = user => _updateUser(user?.id, user)
+    const deleteUser = user => {
+        _deleteUser(user.id)
+        users.updateLocally(filter(not(isEqual(user)), users.data))
+    }
 
     return (
         <UserListContainer vertical padded childrenSpacedBy="12px">
@@ -40,7 +49,7 @@ const Users = ({}) => {
                 <Text as="span">Add New User</Text>
             </Button>
             {users.data?.map(user => (
-                <User user={user} onEdit={console.log} />
+                <User key={user.id} user={user} onEdit={updateUser} onDelete={deleteUser} />
             ))}
         </UserListContainer>
     )

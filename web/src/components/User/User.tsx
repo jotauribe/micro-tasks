@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BsPencil, BsTrash, BsX, BsCheck } from 'react-icons/bs'
 
@@ -12,7 +12,7 @@ import UserModel from '@domain/user'
 export type UserProps = {
     user: UserModel
     onEdit: (UserModel) => void
-    onDelete?: (UserModel) => void
+    onDelete: (UserModel) => void
 }
 
 const Actions = styled(Container)`
@@ -31,11 +31,14 @@ const User: React.FC<UserProps> = ({ user, onEdit, onDelete }) => {
 
     const switchToEditMode = () => setIsEditMode(true)
     const switchToReadOnlyMode = () => setIsEditMode(false)
-    const changeUserName = () => onEdit({ ...user, name })
+    const changeUserName = () => {
+        if (user.name !== name) onEdit({ ...user, name })
+        switchToReadOnlyMode()
+    }
 
     return (
         <ContainerWithHoverEffect centered spaced hoverable={!isEditMode}>
-            <Avatar name={user.name} />
+            <Avatar name={name} />
             {isEditMode ? (
                 <Container>
                     <Input
@@ -52,12 +55,12 @@ const User: React.FC<UserProps> = ({ user, onEdit, onDelete }) => {
                 </Container>
             ) : (
                 <>
-                    <Text>{user.name}</Text>
+                    <Text>{name}</Text>
                     <Actions className="user__actions">
                         <IconButton onClick={switchToEditMode}>
                             <BsPencil />
                         </IconButton>
-                        <IconButton onClick={onDelete}>
+                        <IconButton onClick={() => onDelete(user)}>
                             <BsTrash />
                         </IconButton>
                     </Actions>

@@ -9,4 +9,12 @@ const getAll = (): Promise<UserList> => {
     return axios.get(usersEndpoint).then(response => response.data)
 }
 
-export default { getAll }
+const update = (id: string, user: Partial<User>): Promise<User> => {
+    return axios.patch(`${usersEndpoint}/${id}`, user).then(response => response.data)
+}
+
+const remove = (id: string): any => {
+    return axios.delete(`${usersEndpoint}/${id}`).then(response => response.data)
+}
+
+export default { getAll, update, remove }

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ClassDictionary = { [id: string]: any }
-export type ClassArray = Array<ClassValue>
 export type ClassValue = string | number | ClassDictionary | ClassArray | undefined | null | boolean
+export type ClassArray = Array<ClassValue>
 export type ClassNamesFn = (...classes: ClassValue[]) => string
 
 const forEachKey = (fn: (key: string) => void, o: ClassDictionary) => {

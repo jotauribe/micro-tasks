@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { first } from 'lodash/fp'
+import { map, first, take, pipe, join } from 'lodash/fp'
 
 import Text from '@components/Typography'
+
+const getFirstLetters = map(first)
+const getInitials = pipe(take(2), getFirstLetters, join(''))
 
 const Container = styled.div`
     display: flex;
@@ -18,7 +21,7 @@ const Container = styled.div`
 
 const Avatar = ({ name: fullName }) => {
     const names = fullName.split(' ')
-    const initials = names.map(first).join('')
+    const initials = getInitials(names)
 
     return (
         <Container>
