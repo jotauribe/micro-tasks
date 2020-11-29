@@ -9,6 +9,7 @@ import IconButton from '../IconButton'
 export type HTMLInputElementProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'>
 export interface InputProps extends HTMLInputElementProps {
     label?: string
+    rows?: number
     variant?: 'filled' | 'outlined'
     prefix?: string | React.ReactElement
 }
@@ -18,6 +19,7 @@ const InnerInput = styled.input`
     background: #ffffff;
     border: none;
     width: 100%;
+    resize: none;
 
     &:focus {
         outline: none;
@@ -26,14 +28,15 @@ const InnerInput = styled.input`
 `
 
 const InnerInputWrapper = styled.div<InputProps>`
-    height: 46px;
     width: 100%;
+    height: ${props => (props.type === 'textarea' ? 'auto' : '46px')};
     box-sizing: border-box;
     background: #ffffff;
     border: 1px solid #bbbbbb;
     border-top-width: ${props => (props.variant === 'outlined' ? '1px' : '0')};
     border-right-width: ${props => (props.variant === 'outlined' ? '1px' : '0')};
     border-left-width: ${props => (props.variant === 'outlined' ? '1px' : '0')};
+    border-bottom-width: ${props => (props.type === 'textarea' ? '0' : '1px')};
     border-radius: 3px;
     display: flex;
     align-items: center;
@@ -54,6 +57,7 @@ const Input: React.FC<InputProps> = ({
     ...otherProps
 }) => {
     const isSearchType = type === 'search'
+    const component = type === 'textarea' ? 'textarea' : 'input'
 
     return (
         <Container vertical spaced style={style} className={className}>
@@ -62,9 +66,14 @@ const Input: React.FC<InputProps> = ({
                     {label}
                 </Typography>
             )}
-            <InnerInputWrapper variant={variant}>
+            <InnerInputWrapper variant={variant} type={type}>
                 {Boolean(prefix) && prefix}
-                <InnerInput data-testid="input" value={value} {...otherProps} />
+                <InnerInput
+                    as={component}
+                    data-testid="input"
+                    value={value}
+                    {...otherProps}
+                />
                 {isSearchType && value && (
                     <IconButton>
                         <CloseIcon size="1.5em" color="#5f6368" />

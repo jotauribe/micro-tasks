@@ -2,11 +2,14 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 export type ContainerProps = {
+    width?: string
+    height?: string
     vertical?: boolean
     padded?: boolean
     spaced?: boolean
-    centered?: boolean
     striped?: boolean
+    centered?: boolean
+    bordered?: boolean
     hoverable?: boolean
     childrenSpacedBy?: string
 }
@@ -36,11 +39,15 @@ const spacingStyless = css<ContainerProps>`
 
 const Container = styled.div<ContainerProps>`
     display: flex;
+    width: ${props => props.width || 'auto'};
+    height: ${props => props.height || 'auto'};
     ${ifProp('spaced', spacingStyless)}
     ${ifProp('childrenSpacedBy', spacingStyless)}
     ${ifProp('padded', 'padding: 15px')};
     ${ifProp('striped', stripedChildrenStyles)}
     ${ifProp('vertical', 'flex-direction: column')};
+    ${ifProp('bordered', 'border-radius: 2px')};
+    ${ifProp('bordered', 'border: 1px solid rgba(0, 0, 0, 0.25)')};
     ${ifProp('centered', 'align-items: center')};
     ${ifProp('hoverable', hoverEffectStyles)};
 `

@@ -5,6 +5,7 @@ import Text from '@components/Typography'
 import Container from '@components/Container'
 
 import Users from './Users'
+import Tasks from './Tasks'
 
 const MainContainer = styled(Container)`
     height: 100vh;
@@ -29,6 +30,7 @@ function Home() {
             </Header>
             <Container padded>
                 <Users />
+                <Tasks />
             </Container>
         </MainContainer>
     )

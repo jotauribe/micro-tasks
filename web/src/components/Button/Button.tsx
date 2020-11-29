@@ -15,8 +15,14 @@ const Button = styled.button<ButtonProps>`
     border: 1px solid black;
     align-items: center;
     outline: none;
-    padding: 5px;
+    padding: 8px 16px;
+    border-radius: 18px;
     text-align: center;
+    opacity: 0.5;
+
+    :hover {
+        opacity: 1;
+    }
 
     & > *:not(:last-child) {
         margin-right: 8px;

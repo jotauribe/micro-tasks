@@ -3,17 +3,22 @@ import { BsX, BsCheck } from 'react-icons/bs'
 
 import IconButton from '@components/IconButton'
 import Input from '@components/Input'
+import TextArea from '@components/TextArea'
 import Container from '@components/Container'
 
-export type SingleFieldFormProps = {
+type SingleFieldFormProps = {
     value?: string
+    type?: 'input' | 'textarea'
+    rows?: number
     placeholder?: string
-    onChange?: (value: any) => void
     onSubmit: (value: any) => void
     onCancel: (value: any) => void
+    onChange?: (value: any) => void
 }
 
 const SingleFieldForm: React.FC<SingleFieldFormProps> = ({
+    type,
+    rows,
     value: initialValue = '',
     placeholder,
     onChange,
@@ -21,6 +26,8 @@ const SingleFieldForm: React.FC<SingleFieldFormProps> = ({
     onCancel
 }) => {
     const [value, setValue] = useState(initialValue)
+    const InputComponent = type === 'textarea' ? TextArea : Input
+
     const handleChange = event => {
         if (onChange) onChange(event)
         setValue(event.target.value)
@@ -31,14 +38,22 @@ const SingleFieldForm: React.FC<SingleFieldFormProps> = ({
     }
 
     return (
-        <Container>
-            <Input autoFocus value={value} placeholder={placeholder} onChange={handleChange} />
-            <IconButton onClick={handleSubmit}>
-                <BsCheck size="1.5em" color="#5f6368" />
-            </IconButton>
-            <IconButton onClick={onCancel}>
-                <BsX size="1.5em" color="#5f6368" />
-            </IconButton>
+        <Container vertical={type === 'textarea'}>
+            <InputComponent
+                autoFocus
+                rows={rows}
+                value={value}
+                placeholder={placeholder}
+                onChange={handleChange}
+            />
+            <div>
+                <IconButton onClick={handleSubmit}>
+                    <BsCheck size="1.5em" color="#5f6368" />
+                </IconButton>
+                <IconButton onClick={onCancel}>
+                    <BsX size="1.5em" color="#5f6368" />
+                </IconButton>
+            </div>
         </Container>
     )
 }
