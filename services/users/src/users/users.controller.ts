@@ -21,7 +21,7 @@ export class UsersController {
         return this.usersService.delete(id)
     }
 
-    @Post(':id')
+    @Post()
     create(@Body() body: User) {
         return this.usersService.create(body)
     }

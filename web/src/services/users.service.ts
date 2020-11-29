@@ -17,4 +17,8 @@ const remove = (id: string): any => {
     return axios.delete(`${usersEndpoint}/${id}`).then(response => response.data)
 }
 
-export default { getAll, update, remove }
+const create = (user: User): any => {
+    return axios.post(usersEndpoint, user).then(response => response.data)
+}
+
+export default { getAll, update, remove, create }

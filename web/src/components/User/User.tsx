@@ -5,14 +5,14 @@ import { BsPencil, BsTrash, BsX, BsCheck } from 'react-icons/bs'
 import Avatar from '@components/Avatar'
 import Text from '@components/Typography'
 import IconButton from '@components/IconButton'
-import Input from '@components/Input'
+import SingleFieldForm from '@components/SingleFieldForm'
 import Container from '@components/Container'
 import UserModel from '@domain/user'
 
 export type UserProps = {
     user: UserModel
-    onEdit: (UserModel) => void
-    onDelete: (UserModel) => void
+    onEdit: (user: UserModel) => void
+    onDelete: (user: UserModel) => void
 }
 
 const Actions = styled(Container)`
@@ -40,19 +40,12 @@ const User: React.FC<UserProps> = ({ user, onEdit, onDelete }) => {
         <ContainerWithHoverEffect centered spaced hoverable={!isEditMode}>
             <Avatar name={name} />
             {isEditMode ? (
-                <Container>
-                    <Input
-                        autoFocus
-                        value={name}
-                        onChange={event => setUsername(event.target.value)}
-                    />
-                    <IconButton onClick={changeUserName}>
-                        <BsCheck size="1.5em" color="#5f6368" />
-                    </IconButton>
-                    <IconButton onClick={switchToReadOnlyMode}>
-                        <BsX size="1.5em" color="#5f6368" />
-                    </IconButton>
-                </Container>
+                <SingleFieldForm
+                    value={name}
+                    onSubmit={changeUserName}
+                    onCancel={switchToReadOnlyMode}
+                    onChange={event => setUsername(event.target.value)}
+                />
             ) : (
                 <>
                     <Text>{name}</Text>
