@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common'
-import { UsersController } from './users/users.controller'
-import { UsersService } from './users/users.service'
+import { MongooseModule } from '@nestjs/mongoose'
+
+import { TasksController } from './tasks/tasks.controller'
+import { TasksService } from './tasks/tasks.service'
+import { Task, TaskSchema } from './tasks/task.schema'
+
+const { MONGO_USER, MONGO_PWD } = process.env
+const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PWD}@users-database:27017/tasks-database`
 
 @Module({
-    imports: [],
-    controllers: [UsersController],
-    providers: [UsersService]
+    imports: [
+        MongooseModule.forRoot(mongoUrl),
+        MongooseModule.forFeature([{ name: Task.name, schema: TaskSchema }])
+    ],
+    controllers: [TasksController],
+    providers: [TasksService]
 })
 export class AppModule {}
