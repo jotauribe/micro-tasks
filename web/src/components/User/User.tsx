@@ -7,6 +7,7 @@ import Text from '@components/Typography'
 import IconButton from '@components/IconButton'
 import SingleFieldForm from '@components/SingleFieldForm'
 import Container from '@components/Container'
+import handleWithoutPropagation from '@utils/handleEventWithoutPropagation'
 import UserModel from '@domain/user'
 
 export type UserProps = {
@@ -22,6 +23,7 @@ const Actions = styled(Container)`
 `
 
 const ContainerWithHoverEffect = styled(Container)`
+    cursor: default;
     ${props => props.selected && 'background-color: rgba(0, 0, 0, 0.05);'}
     &:not(:hover) > .user__actions {
         display: none;
@@ -59,10 +61,10 @@ const User: React.FC<UserProps> = ({ user, selected, onEdit, onDelete, onClick }
                 <>
                     <Text>{name}</Text>
                     <Actions className="user__actions">
-                        <IconButton onClick={switchToEditMode}>
+                        <IconButton onClick={handleWithoutPropagation(switchToEditMode)}>
                             <BsPencil />
                         </IconButton>
-                        <IconButton onClick={() => onDelete(user)}>
+                        <IconButton onClick={handleWithoutPropagation(() => onDelete(user))}>
                             <BsTrash />
                         </IconButton>
                     </Actions>

@@ -5,6 +5,7 @@ import IconButton from '@components/IconButton'
 import Input from '@components/Input'
 import TextArea from '@components/TextArea'
 import Container from '@components/Container'
+import handleWithoutPropagation from '@utils/handleEventWithoutPropagation'
 
 type SingleFieldFormProps = {
     value?: string
@@ -47,10 +48,10 @@ const SingleFieldForm: React.FC<SingleFieldFormProps> = ({
                 onChange={handleChange}
             />
             <div>
-                <IconButton onClick={handleSubmit}>
+                <IconButton onClick={handleWithoutPropagation(handleSubmit)}>
                     <BsCheck size="1.5em" color="#5f6368" />
                 </IconButton>
-                <IconButton onClick={onCancel}>
+                <IconButton onClick={handleWithoutPropagation(onCancel)}>
                     <BsX size="1.5em" color="#5f6368" />
                 </IconButton>
             </div>
