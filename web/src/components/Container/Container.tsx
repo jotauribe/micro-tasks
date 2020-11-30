@@ -31,9 +31,9 @@ const hoverEffectStyles = css<ContainerProps>`
 
 const spacingStyless = css<ContainerProps>`
     & > *:not(:last-child) {
-        margin-right: ${props => (props.vertical ? '0' : '15px')};
-        margin-right: ${props => (props.vertical ? '0' : props.childrenSpacedBy || '15px')};
-        margin-bottom: ${props => (props.vertical ? props.childrenSpacedBy || '15px' : '0')};
+        margin-right: ${props => (props.vertical ? '' : '15px')};
+        margin-right: ${props => (props.vertical ? '' : props.childrenSpacedBy || '15px')};
+        margin-bottom: ${props => (props.vertical ? props.childrenSpacedBy || '15px' : '')};
     }
 `
 

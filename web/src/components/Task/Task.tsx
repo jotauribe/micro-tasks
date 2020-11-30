@@ -16,6 +16,8 @@ type TaskProps = {
 }
 
 const ContainerWithHoverEffect = styled(Container)`
+    height: 200px;
+    width: 200px;
     &:not(:hover) > .task__actions {
         display: none;
     }
@@ -27,9 +29,8 @@ const Task: React.FC<TaskProps> = ({ task, onEdit, onComplete, onDelete }) => {
     const [isInEditMode, setIsInEditMode] = useState(false)
 
     const markAsDone = () => {
-        if(task.state !== 'done') onComplete({ ...task, state: 'done' })
+        if (task.state !== 'done') onComplete({ ...task, state: 'done' })
         setTaskState('done')
-
     }
     const changeTaskDescription = description => {
         if (task.description !== description) onEdit({ ...task, description })
@@ -37,7 +38,7 @@ const Task: React.FC<TaskProps> = ({ task, onEdit, onComplete, onDelete }) => {
     }
 
     return (
-        <ContainerWithHoverEffect vertical padded bordered height="200px" width="200px">
+        <ContainerWithHoverEffect vertical padded bordered>
             <header>{taskState.toUpperCase()}</header>
             {isInEditMode ? (
                 <SingleFieldForm

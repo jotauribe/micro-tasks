@@ -17,7 +17,10 @@ const TaskListContainer = styled(Container)`
     display: flex;
     flex-wrap: wrap;
     background-color: white;
-    box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
+
+    & > * {
+        margin-bottom: 15px;
+    }
 `
 
 const Tasks: React.FC<TasksProps> = ({ tasks, updateTasksLocally }) => {

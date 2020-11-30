@@ -23,6 +23,18 @@ const Header = styled(Container)`
     box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
 `
 
+const Content = styled(Container)`
+    height: calc(100% - 50px);
+    gap: 15px;
+`
+
+const TaskSectionWrapper = styled.div`
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
+`
+
 function Home() {
     const [findUsers, users] = useAsyncService(usersService.getAll, { runOnMount: true })
     const [findTasks, tasks] = useAsyncService(tasksService.find, { runOnMount: true })
@@ -36,14 +48,16 @@ function Home() {
                     MicroTasks
                 </Text>
             </Header>
-            <Container padded>
+            <Content padded>
                 <Users
                     users={users.data}
                     onSelectUser={findUserTasks}
                     updateUsersLocally={users.updateLocally}
                 />
-                <Tasks tasks={tasks.data} updateTasksLocally={tasks.updateLocally} />
-            </Container>
+                <TaskSectionWrapper>
+                    <Tasks tasks={tasks.data} updateTasksLocally={tasks.updateLocally} />
+                </TaskSectionWrapper>
+            </Content>
         </MainContainer>
     )
 }
