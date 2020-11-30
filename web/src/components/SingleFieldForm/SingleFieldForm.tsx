@@ -47,14 +47,14 @@ const SingleFieldForm: React.FC<SingleFieldFormProps> = ({
                 placeholder={placeholder}
                 onChange={handleChange}
             />
-            <div>
+            <Container>
                 <IconButton onClick={handleWithoutPropagation(handleSubmit)}>
                     <BsCheck size="1.5em" color="#5f6368" />
                 </IconButton>
                 <IconButton onClick={handleWithoutPropagation(onCancel)}>
                     <BsX size="1.5em" color="#5f6368" />
                 </IconButton>
-            </div>
+            </Container>
         </Container>
     )
 }
