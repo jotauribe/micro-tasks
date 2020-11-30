@@ -11,8 +11,10 @@ import UserModel from '@domain/user'
 
 export type UserProps = {
     user: UserModel
+    selected?: boolean
     onEdit: (user: UserModel) => void
     onDelete: (user: UserModel) => void
+    onClick: (user: UserModel) => void
 }
 
 const Actions = styled(Container)`
@@ -20,12 +22,13 @@ const Actions = styled(Container)`
 `
 
 const ContainerWithHoverEffect = styled(Container)`
+    ${props => props.selected && 'background-color: rgba(0, 0, 0, 0.05);'}
     &:not(:hover) > .user__actions {
         display: none;
     }
 `
 
-const User: React.FC<UserProps> = ({ user, onEdit, onDelete }) => {
+const User: React.FC<UserProps> = ({ user, selected, onEdit, onDelete, onClick }) => {
     const [name, setUsername] = useState(user.name)
     const [isEditMode, setIsEditMode] = useState(false)
 
@@ -37,7 +40,13 @@ const User: React.FC<UserProps> = ({ user, onEdit, onDelete }) => {
     }
 
     return (
-        <ContainerWithHoverEffect centered spaced hoverable={!isEditMode}>
+        <ContainerWithHoverEffect
+            spaced
+            centered
+            selected={selected}
+            hoverable={!isEditMode}
+            onClick={() => onClick(user)}
+        >
             <Avatar name={name} />
             {isEditMode ? (
                 <SingleFieldForm

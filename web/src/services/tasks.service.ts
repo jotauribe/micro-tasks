@@ -2,11 +2,12 @@ import axios from 'axios'
 import Task from '@domain/task'
 
 type TaskList = Array<Task>
+type Query = Partial<Task>
 
 const tasksEndpoint = 'http://localhost:3030/tasks'
 
-const getAll = (): Promise<TaskList> => {
-    return axios.get(tasksEndpoint).then(response => response.data)
+const find = (params: Query): Promise<TaskList> => {
+    return axios.get(tasksEndpoint, { params }).then(response => response.data)
 }
 
 const update = (id: string, user: Partial<Task>): Promise<Task> => {
@@ -21,4 +22,4 @@ const create = (user: Task): any => {
     return axios.post(tasksEndpoint, user).then(response => response.data)
 }
 
-export default { getAll, update, remove, create }
+export default { find, update, remove, create }

@@ -6,6 +6,12 @@ import Task from '@components/Task'
 import tasksService from '@services/tasks.service'
 import useAsyncService from '@hooks/useAsyncService'
 import removeItem from '@utils/removeItem'
+import ITask from 'src/types/task'
+
+export type TasksProps = {
+    tasks: Array<ITask>
+    updateTasksLocally: (updater: any) => void
+}
 
 const TaskListContainer = styled(Container)`
     display: flex;
@@ -14,20 +20,19 @@ const TaskListContainer = styled(Container)`
     box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
 `
 
-const Tasks = () => {
-    const [, tasks] = useAsyncService(tasksService.getAll, { runOnMount: true })
+const Tasks: React.FC<TasksProps> = ({ tasks, updateTasksLocally }) => {
     const [_updateTask] = useAsyncService(tasksService.update)
     const [_deleteTask] = useAsyncService(tasksService.remove)
 
     const updateTask = ({ id, ...task }) => _updateTask(id, task)
     const deleteTask = task => {
         _deleteTask(task.id)
-        tasks.updateLocally(taskList => removeItem(task)(taskList))
+        updateTasksLocally(taskList => removeItem(task)(taskList))
     }
 
     return (
         <TaskListContainer padded spaced>
-            {tasks.data?.map(task => (
+            {tasks?.map(task => (
                 <Task
                     key={task.id}
                     task={task}

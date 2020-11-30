@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 import Text from '@components/Typography'
 import Container from '@components/Container'
+import usersService from '@services/users.service'
+import tasksService from '@services/tasks.service'
+import useAsyncService from '@hooks/useAsyncService'
 
 import Users from './Users'
 import Tasks from './Tasks'
@@ -21,6 +24,11 @@ const Header = styled(Container)`
 `
 
 function Home() {
+    const [findUsers, users] = useAsyncService(usersService.getAll, { runOnMount: true })
+    const [findTasks, tasks] = useAsyncService(tasksService.find, { runOnMount: true })
+
+    const findUserTasks = user => findTasks({ ownerId: user.id })
+
     return (
         <MainContainer vertical>
             <Header centered padded>
@@ -29,8 +37,12 @@ function Home() {
                 </Text>
             </Header>
             <Container padded>
-                <Users />
-                <Tasks />
+                <Users
+                    users={users.data}
+                    onSelectUser={findUserTasks}
+                    updateUsersLocally={users.updateLocally}
+                />
+                <Tasks tasks={tasks.data} updateTasksLocally={tasks.updateLocally} />
             </Container>
         </MainContainer>
     )

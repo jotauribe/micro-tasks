@@ -12,6 +12,13 @@ import usersService from '@services/users.service'
 import useAsyncService from '@hooks/useAsyncService'
 import removeItem from '@utils/removeItem'
 import id from '@utils/uid'
+import IUser from '@domain/user'
+
+export type UsersProps = {
+    users: Array<IUser>
+    onSelectUser: (user: IUser) => void
+    updateUsersLocally: (updater: any) => void
+}
 
 const Header = styled(Container.as('header'))`
     min-width: 300px;
@@ -29,14 +36,14 @@ const UserListContainer = styled(Container)`
     box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
 `
 
-const Users = () => {
+const Users: React.FC<UsersProps> = ({ users = [], onSelectUser, updateUsersLocally }) => {
     const [isNewUserFormVisible, setIsNewUserFormVisible] = useState(false)
-    const [, users] = useAsyncService(usersService.getAll, { runOnMount: true })
+    const [selectedUser, selectUser] = useState<IUser | null>()
     const [_updateUser] = useAsyncService(usersService.update)
     const [_deleteUser] = useAsyncService(usersService.remove)
     const [_createUser] = useAsyncService(usersService.create)
 
-    const addToList = user => users.updateLocally([user, ...(users.data || [])])
+    const addToList = user => updateUsersLocally([user, ...(users || [])])
     const updateUser = user => _updateUser(user?.id, user)
     const createUser = name => {
         const newUser = { id: id(), name }
@@ -44,7 +51,11 @@ const Users = () => {
     }
     const deleteUser = user => {
         _deleteUser(user.id)
-        users.updateLocally(userList => removeItem(user)(userList))
+        updateUsersLocally(userList => removeItem(user)(userList))
+    }
+    const handleUserSelection = user => {
+        selectUser(user)
+        onSelectUser(user)
     }
 
     return (
@@ -64,8 +75,15 @@ const Users = () => {
                     <Text as="span">Add New User</Text>
                 </Button>
             )}
-            {users.data?.map(user => (
-                <User key={user.id} user={user} onEdit={updateUser} onDelete={deleteUser} />
+            {users.map(user => (
+                <User
+                    key={user.id}
+                    user={user}
+                    selected={selectedUser?.id === user.id}
+                    onEdit={updateUser}
+                    onDelete={deleteUser}
+                    onClick={handleUserSelection}
+                />
             ))}
         </UserListContainer>
     )
