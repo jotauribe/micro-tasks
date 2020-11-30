@@ -6,7 +6,7 @@ import { TasksService } from './tasks/tasks.service'
 import { Task, TaskSchema } from './tasks/task.schema'
 
 const { MONGO_USER, MONGO_PWD } = process.env
-const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PWD}@users-database:27017/tasks-database`
+const mongoUrl = `mongodb://${MONGO_USER}:${MONGO_PWD}@tasks-database:27019/tasks-database`
 
 @Module({
     imports: [

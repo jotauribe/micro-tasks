@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { Task } from './task.schema'
 import { TasksService } from './tasks.service'
 
-@Controller()
+@Controller('tasks')
 export class TasksController {
     constructor(private readonly usersService: TasksService) {}
 
