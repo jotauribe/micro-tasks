@@ -1,4 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { Request } from 'express'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common'
+
 import { Task } from './task.schema'
 import { TasksService } from './tasks.service'
 
@@ -7,8 +9,8 @@ export class TasksController {
     constructor(private readonly usersService: TasksService) {}
 
     @Get()
-    find() {
-        return this.usersService.findAll()
+    find(@Req() request: Request) {
+        return this.usersService.find(request.query)
     }
 
     @Patch(':id')

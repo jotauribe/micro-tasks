@@ -12,8 +12,8 @@ export class TasksService {
         return this.taskModel.create(user)
     }
 
-    async findAll(): Promise<Task[]> {
-        return this.taskModel.find().exec()
+    async find(query: Partial<Task>): Promise<Task[]> {
+        return this.taskModel.find(query).exec()
     }
 
     async update(id: string, body: Partial<Task>): Promise<Task> {
