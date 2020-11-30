@@ -55,7 +55,11 @@ function Home() {
                     updateUsersLocally={users.updateLocally}
                 />
                 <TaskSectionWrapper>
-                    <Tasks tasks={tasks.data} updateTasksLocally={tasks.updateLocally} />
+                    <Tasks
+                        tasks={tasks.data}
+                        users={users.data}
+                        updateTasksLocally={tasks.updateLocally}
+                    />
                 </TaskSectionWrapper>
             </Content>
         </MainContainer>

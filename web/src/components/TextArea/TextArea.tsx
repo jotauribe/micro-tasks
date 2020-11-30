@@ -51,13 +51,13 @@ const TextArea: React.FC<TextAreaProps> = ({
     ...otherProps
 }) => {
     return (
-        <Container vertical spaced style={style} className={className}>
+        <Container vertical spaced className={className}>
             {label && (
                 <Typography as="label" data-testid="label">
                     {label}
                 </Typography>
             )}
-            <TextAreaWrapper>
+            <TextAreaWrapper style={style}>
                 <InnerTextArea data-testid="input" value={value} {...otherProps} />
             </TextAreaWrapper>
         </Container>

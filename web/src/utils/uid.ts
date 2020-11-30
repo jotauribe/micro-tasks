@@ -1,3 +1,3 @@
-const uid = (): number => Math.floor(Math.random() * Date.now())
+const uid = (): string => String(Math.floor(Math.random() * Date.now()))
 
 export default uid

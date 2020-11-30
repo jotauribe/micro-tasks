@@ -11,6 +11,7 @@ export interface InputProps extends HTMLInputElementProps {
     label?: string
     rows?: number
     variant?: 'filled' | 'outlined'
+    innerInputStyle?: React.CSSProperties
     prefix?: string | React.ReactElement
 }
 
@@ -53,6 +54,7 @@ const Input: React.FC<InputProps> = ({
     variant,
     prefix,
     style,
+    innerInputStyle,
     className = '',
     ...otherProps
 }) => {
@@ -66,7 +68,7 @@ const Input: React.FC<InputProps> = ({
                     {label}
                 </Typography>
             )}
-            <InnerInputWrapper variant={variant} type={type}>
+            <InnerInputWrapper variant={variant} type={type} style={innerInputStyle}>
                 {Boolean(prefix) && prefix}
                 <InnerInput
                     as={component}
