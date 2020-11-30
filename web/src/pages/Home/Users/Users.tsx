@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { negate as not, isEqual, filter } from 'lodash/fp'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 
 import Text from '@components/Typography'
@@ -11,6 +10,7 @@ import User from '@components/User'
 import SingleFieldForm from '@components/SingleFieldForm'
 import usersService from '@services/users.service'
 import useAsyncService from '@hooks/useAsyncService'
+import removeItem from '@utils/removeItem'
 import id from '@utils/uid'
 
 const Header = styled(Container.as('header'))`
@@ -29,9 +29,9 @@ const UserListContainer = styled(Container)`
     box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
 `
 
-const Users = ({}) => {
+const Users = () => {
     const [isNewUserFormVisible, setIsNewUserFormVisible] = useState(false)
-    const [_, users] = useAsyncService(usersService.getAll, { runOnMount: true })
+    const [, users] = useAsyncService(usersService.getAll, { runOnMount: true })
     const [_updateUser] = useAsyncService(usersService.update)
     const [_deleteUser] = useAsyncService(usersService.remove)
     const [_createUser] = useAsyncService(usersService.create)
@@ -44,7 +44,7 @@ const Users = ({}) => {
     }
     const deleteUser = user => {
         _deleteUser(user.id)
-        users.updateLocally(filter(not(isEqual(user)), users.data))
+        users.updateLocally(userList => removeItem(user)(userList))
     }
 
     return (

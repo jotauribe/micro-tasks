@@ -22,9 +22,15 @@ const ContainerWithHoverEffect = styled(Container)`
 `
 
 const Task: React.FC<TaskProps> = ({ task, onEdit, onComplete, onDelete }) => {
+    const [taskState, setTaskState] = useState(task.state)
     const [description, setDescription] = useState(task.description)
     const [isInEditMode, setIsInEditMode] = useState(false)
 
+    const markAsDone = () => {
+        if(task.state !== 'done') onComplete({ ...task, state: 'done' })
+        setTaskState('done')
+
+    }
     const changeTaskDescription = description => {
         if (task.description !== description) onEdit({ ...task, description })
         setIsInEditMode(false)
@@ -32,7 +38,7 @@ const Task: React.FC<TaskProps> = ({ task, onEdit, onComplete, onDelete }) => {
 
     return (
         <ContainerWithHoverEffect vertical padded bordered height="200px" width="200px">
-            <header>{task.state.toUpperCase()}</header>
+            <header>{taskState.toUpperCase()}</header>
             {isInEditMode ? (
                 <SingleFieldForm
                     type="textarea"
@@ -52,10 +58,10 @@ const Task: React.FC<TaskProps> = ({ task, onEdit, onComplete, onDelete }) => {
             )}
             {!isInEditMode && (
                 <div className="task__actions" style={{ marginTop: 'auto' }}>
-                    <IconButton>
+                    <IconButton onClick={() => onDelete(task)}>
                         <BsTrash size="1em" />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={markAsDone}>
                         <BsCheckCircle size="1em" />
                     </IconButton>
                     <IconButton>

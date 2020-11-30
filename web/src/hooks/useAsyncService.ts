@@ -17,7 +17,8 @@ const useAsyncService = (service, options?: Options): [any, ServiceResponse & Wi
 
     const { onError, onSuccess, runOnMount } = options || {}
     const updateState = (data = {}) => setState({ ...state, ...data })
-    const updateLocally = data => setState({ ...state, data })
+    const updateLocally = updater =>
+        setState(prevState => ({ ...prevState, data: updater(prevState.data) }))
 
     const execute = (...args) => {
         setState({ ...state, isLoading: true })

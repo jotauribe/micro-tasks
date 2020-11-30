@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { BsPencil, BsTrash, BsX, BsCheck } from 'react-icons/bs'
+import { BsPencil, BsTrash } from 'react-icons/bs'
 
 import Avatar from '@components/Avatar'
 import Text from '@components/Typography'
