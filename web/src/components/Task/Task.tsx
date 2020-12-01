@@ -65,8 +65,8 @@ const Task: React.FC<TaskProps> = ({ task, onEdit, onComplete, onDelete }) => {
                     <IconButton onClick={markAsDone}>
                         <BsCheckCircle size="1em" />
                     </IconButton>
-                    <IconButton>
-                        <BsPencil size="1em" onClick={() => setIsInEditMode(true)} />
+                    <IconButton onClick={() => setIsInEditMode(true)}>
+                        <BsPencil size="1em" />
                     </IconButton>
                 </div>
             )}
