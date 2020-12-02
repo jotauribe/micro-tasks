@@ -24,7 +24,7 @@ const Header = styled(Container)`
 `
 
 const Content = styled(Container)`
-    height: calc(100% - 50px);
+    height: calc(100% - 55px);
     gap: 15px;
 `
 

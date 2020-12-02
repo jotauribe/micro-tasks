@@ -21,17 +21,20 @@ export type UsersProps = {
 }
 
 const Header = styled(Container.as('header'))`
-    min-width: 300px;
+    min-width: 370px;
     justify-content: space-between;
 `
 
 const PlusIcon = styled(BsFillPlusCircleFill)`
     padding: 5px;
     border-radius: 50%;
+    overflow: scroll;
     background-color: rgb(222, 224, 229);
 `
 
 const UserListContainer = styled(Container)`
+    max-height: 100%;
+    overflow: hidden;
     background-color: white;
     box-shadow: 0px 2px 32px -15px rgba(0, 0, 0, 0.25);
 `
@@ -75,16 +78,18 @@ const Users: React.FC<UsersProps> = ({ users = [], onSelectUser, updateUsersLoca
                     <Text as="span">Add New User</Text>
                 </Button>
             )}
-            {users.map(user => (
-                <User
-                    key={user.id}
-                    user={user}
-                    selected={selectedUser?.id === user.id}
-                    onEdit={updateUser}
-                    onDelete={deleteUser}
-                    onClick={handleUserSelection}
-                />
-            ))}
+            <Container vertical spaced style={{ overflow: 'scroll' }}>
+                {users.map((user: IUser) => (
+                    <User
+                        key={user.id}
+                        user={user}
+                        selected={selectedUser?.id === user.id}
+                        onEdit={updateUser}
+                        onDelete={deleteUser}
+                        onClick={handleUserSelection}
+                    />
+                ))}
+            </Container>
         </UserListContainer>
     )
 }

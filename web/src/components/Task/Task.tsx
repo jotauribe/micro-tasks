@@ -16,8 +16,8 @@ type TaskProps = {
 }
 
 const ContainerWithHoverEffect = styled(Container)`
-    height: 200px;
-    width: 200px;
+    height: 220px;
+    width: 230px;
     &:not(:hover) > .task__actions {
         display: none;
     }

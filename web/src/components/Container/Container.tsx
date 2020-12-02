@@ -39,6 +39,7 @@ const spacingStyless = css<ContainerProps>`
 
 const Container = styled.div<ContainerProps>`
     display: flex;
+    box-sizing: border-box;
     width: ${props => props.width || 'auto'};
     height: ${props => props.height || 'auto'};
     ${ifProp('spaced', spacingStyless)}
