@@ -40,6 +40,7 @@ services:
       - './services/tasks/:/usr/src/tasks'
       - /usr/src/tasks/node_modules/
     depends_on:
+      - rabbitmq
       - tasks-database
   users-database:
     image: mongo
@@ -65,3 +66,11 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - ./scripts/mongo/tasks/:/docker-entrypoint-initdb.d/
+  rabbitmq:
+    image: rabbitmq:3-management
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+      - ./rabbitmq/logs:/var/log/rabbitmq/log
+    ports:
+      - 5672:5672
+      - 15672:15672

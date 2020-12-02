@@ -20,7 +20,11 @@ export class TasksService {
         return this.taskModel.updateOne({ id }, body)
     }
 
-    async delete(id: string) {
+    async deleteOne(id: string) {
         return this.taskModel.deleteOne({ id })
+    }
+
+    delete(ownerId: string) {
+        return this.taskModel.deleteMany({ ownerId })
     }
 }
