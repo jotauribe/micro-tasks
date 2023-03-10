@@ -1,4 +1,4 @@
-# micro-tasks
+# new-micro-tasks
 
 ## Tests
 To run unit tests, you have to go to every subproject (web, tasks, users) and run:
